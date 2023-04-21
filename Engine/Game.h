@@ -30,7 +30,7 @@
 #include "Paddle.h"
 #include "Walls.h"
 #include "LifeCounter.h"
-
+// test commit to git after code modified
 class Game
 {
 public:
