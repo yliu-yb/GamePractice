@@ -24,7 +24,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	ball(Vec2(100, 100), Vec2(-120, -60))
 {
 }
 
@@ -38,8 +39,13 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	auto dt = ft.Mark();
+
+	ball.update(dt);
+	ball.boundaryCheck(Graphics::ScreenWidth, Graphics::ScreenHeight);
 }
 
 void Game::ComposeFrame()
 {
+	ball.Draw(gfx);
 }
