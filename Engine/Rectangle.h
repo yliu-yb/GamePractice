@@ -1,14 +1,22 @@
 #pragma once
 #include"Vec2.h"
 
-class Rectangle
+class myRectangle
 {
 public:
-	Rectangle() = default;
-	Rectangle(int top, int left, int right, int bottom);
+	myRectangle() = default;
+	myRectangle(Vec2 center, int width, int height);
+	myRectangle(int top, int left, int right, int bottom);
+	myRectangle(Vec2 center, int radius);
 
-public:
-	Vec2 topLeft;
-	Vec2 bottomRight;
+	float GetLeft() const;
+	float GetRight() const;
+	float GetTop() const;
+	float GetBottom() const;
+
+public:	
+	Vec2 center;
+	float width;
+	float height;
 };
 

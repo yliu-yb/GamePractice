@@ -1,15 +1,18 @@
 #include "Ball.h"
+#include <cmath>
 
-Ball::Ball(Vec2 pos_in, Vec2 vel_in)
+Ball::Ball(Vec2 center_in, Vec2 vel_in)
 	:
-	pos(pos_in),
-	vel(vel_in)
+	center(center_in),
+	vel(vel_in),
+	center_old(center)
 {
 }
 
 void Ball::update(const float & dt)
 {
-	pos += vel * dt;
+	center_old = center;
+	center += vel * dt;
 }
 
 void Ball::reboundX()
@@ -24,30 +27,78 @@ void Ball::reboundY()
 
 void Ball::Draw(Graphics& gfx)
 {
-	SpriteCodex::DrawBall(pos, gfx);
+	SpriteCodex::DrawBall(center, gfx);
 }
 
-void Ball::boundaryCheck(int width, int height)
+bool Ball::wallCollision(const myRectangle & wall)
 {
-	if (pos.x - 7 <= 0) 
+	bool collisioned = false;
+
+	if (center.x - radius <= wall.GetLeft())
 	{
-		pos.x = 7;
+		center.x = wall.GetLeft() + radius;
 		reboundX();
+		collisioned = true;
 	}
-	else if(pos.x + 7 >= width)
+	else if (center.x + radius >= wall.GetRight())
 	{
-		pos.x = width - 7 - 1;
+		center.x = wall.GetRight() - radius - 1;
 		reboundX();
+		collisioned = true;
 	}
-	
-	if (pos.y - 7 <= 0)
+
+	if (center.y - radius <= wall.GetTop())
 	{
-		pos.y = 7;
+		center.y = wall.GetTop() + radius;
 		reboundY();
+		collisioned = true;
 	}
-	else if(pos.y + 7 >= height)
+	else if (center.y + radius >= wall.GetBottom())
 	{
-		pos.y = height - 7 - 1;
+		center.y = wall.GetBottom() - radius - 1;
 		reboundY();
+		collisioned = true;
 	}
+
+	return collisioned;
 }
+
+bool Ball::boardCollision(const myRectangle & board)
+{
+	bool collisioned = false;
+	myRectangle ballRec(center, radius);
+	
+	if (ballRec.GetRight() >= board.GetLeft() && ballRec.GetLeft() <= board.GetRight()
+		&& ballRec.GetTop() <= board.GetBottom() && ballRec.GetBottom() >= board.GetTop()) 
+	{
+
+		if (center_old.x + radius <= board.GetLeft())
+		{
+			center.x = board.GetLeft() - radius;
+			reboundX();
+			collisioned = true;
+		}
+		else if (center_old.x - radius >= board.GetRight())
+		{
+			center.x = board.GetRight() + radius;
+			reboundX();
+			collisioned = true;
+		}
+		else if (center_old.y + radius <= board.GetTop())
+		{
+			center.y = board.GetTop() - radius;
+			reboundY();
+			collisioned = true;
+		}
+		else if(center_old.y - radius >= board.GetBottom())
+		{
+			center.y = board.GetBottom() + radius;
+			reboundY();
+			collisioned = true;
+		}
+
+	}
+
+	return collisioned;
+}
+
