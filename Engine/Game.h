@@ -25,7 +25,8 @@
 #include "Graphics.h"
 #include "Ball.h"
 #include "FrameTimer.h"
-#include "Board.h"
+#include "pad.h"
+#include "brick.h"
 #include "Rectangle.h"
 #include "Sound.h"
 class Game
@@ -49,8 +50,8 @@ private:
 	/********************************/
 	Ball ball;
 	FrameTimer ft;
-	Board board;
-	Board moveBoard;
+	pad paddle;
+	brick bricks;
 	myRectangle wall;
 	Sound arkbrick;
 	Sound arkpad;

@@ -15,6 +15,8 @@ public:
 	bool wallCollision(const myRectangle &wall);
 	bool boardCollision(const myRectangle &board);
 
+	myRectangle GetRect();
+
 public:
 	Vec2 center;
 	Vec2 vel;

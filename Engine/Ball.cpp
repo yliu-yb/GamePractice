@@ -103,3 +103,8 @@ bool Ball::boardCollision(const myRectangle & board)
 	return collisioned;
 }
 
+myRectangle Ball::GetRect()
+{
+	return myRectangle::FromCenter(center, radius, radius);
+}
+
