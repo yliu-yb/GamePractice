@@ -14,7 +14,7 @@ public:
 	void draw(Graphics &gfs);
 	void update(Keyboard &kb, float dt);
 	void wallCollision(const myRectangle& wall);
-	bool isOverlapping(const myRectangle& rec_in);
+	bool isOverlapping(myRectangle& rec_in);
 public:
 	myRectangle rec;
 	Color c;

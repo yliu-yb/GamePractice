@@ -339,8 +339,7 @@ void Graphics::DrawRect( int x0,int y0,int x1,int y1,Color c )
 
 void Graphics::DrawRectangle(myRectangle rec, Color c)
 {
-	DrawRect(rec.center.x - rec.width * 0.5, rec.center.y - rec.height * 0.5f, 
-		rec.center.x + rec.width * 0.5, rec.center.y + rec.height * 0.5f, c);
+	DrawRect(rec.GetLeft(), rec.GetTop(), rec.GetRight(), rec.GetBottom(), c);
 }
 
 void Graphics::DrawCircle( int x,int y,int radius,Color c )

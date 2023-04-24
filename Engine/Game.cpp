@@ -28,10 +28,9 @@ Game::Game(MainWindow& wnd)
 	ball(Vec2(10, 10), Vec2(2000, 400)),
 	board(Vec2(200, 200), 200, 200, Vec2(0, 0), RGB(255, 0, 0)),
 	moveBoard(Vec2(500, 300), 100, 300, Vec2(300, 300), RGB(0, 255, 0)),
-	wall(Vec2(0 + Graphics::ScreenWidth * 0.5, 0 + Graphics::ScreenHeight * 0.5), Graphics::ScreenWidth, Graphics::ScreenHeight),
+	wall(0, Graphics::ScreenWidth, 0, Graphics::ScreenHeight),
 	arkbrick(L".\\Sounds\\arkbrick.wav", false),
 	arkpad(L".\\Sounds\\arkpad.wav", false)
-
 {
 }
 

@@ -66,12 +66,13 @@ bool Ball::wallCollision(const myRectangle & wall)
 bool Ball::boardCollision(const myRectangle & board)
 {
 	bool collisioned = false;
-	myRectangle ballRec(center, radius);
+	myRectangle ballRec = myRectangle::FromCenter(center, radius, radius);
 	
-	if (ballRec.GetRight() >= board.GetLeft() && ballRec.GetLeft() <= board.GetRight()
-		&& ballRec.GetTop() <= board.GetBottom() && ballRec.GetBottom() >= board.GetTop()) 
-	{
 
+
+	if (ballRec.isOverlapped(board) || ballRec.GetRight() >= board.GetLeft() && ballRec.GetLeft() <= board.GetRight()
+		&& ballRec.GetTop() <= board.GetBottom() && ballRec.GetBottom() >= board.GetTop())
+	{
 		if (center_old.x + radius <= board.GetLeft())
 		{
 			center.x = board.GetLeft() - radius;

@@ -20,6 +20,5 @@ public:
 	Vec2 vel;
 	Vec2 center_old;
 
-
-	static constexpr int radius = 7;
+	static constexpr float radius = 7.0f;
 };
