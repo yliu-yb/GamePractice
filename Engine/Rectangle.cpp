@@ -1,43 +1,88 @@
 #include "Rectangle.h"
+#include <cmath>
 
-myRectangle::myRectangle(Vec2 center_in, int width_in, int height_in)
+myRectangle::myRectangle(float left_in, float right_in, float top_in, float bottom_in)
 	:
-	center(center_in),
-	width(width_in),
-	height(height_in)
+	left(left_in),
+	right(right_in),
+	top(top_in),
+	bottom(bottom_in)
 {
 }
 
-myRectangle::myRectangle(int top, int left, int right, int bottom)
+myRectangle::myRectangle(Vec2 topleft, float width, float height)
 	:
-	myRectangle(Vec2(left + (right - left) * 0.5f, top + (bottom - top) * 0.5f), right - left, bottom - top)
+	left(topleft.x),
+	right(topleft.x + width),
+	top(topleft.y),
+	bottom(topleft.y + height)
 {
 }
 
-myRectangle::myRectangle(Vec2 center, int radius)
-	:
-	myRectangle(center, radius * 2, radius * 2)
+myRectangle myRectangle::FromCenter(Vec2 center, float halfwidth, float halfheight)
 {
+	return myRectangle(Vec2( center.x - halfwidth, center.y - halfheight), halfwidth * 2.0f, halfheight * 2.0f);
+}
+
+bool myRectangle::isOverlapped(const myRectangle &rec)
+{
+	bool overlapped = false;
+
+	if (std::fabs(GetCenter().x - rec.GetCenter().x) <= (GetWidth() + rec.GetWidth()) * 0.5f 
+		&&
+		std::fabs(GetCenter().y - rec.GetCenter().y) <= (GetHeight() + rec.GetHeight()) * 0.5f)
+	{
+		overlapped = true;
+	}
+
+	return overlapped;
+}
+
+float myRectangle::GetWidth() const
+{
+	return right - left;
+}
+
+float myRectangle::GetHeight() const
+{
+	return bottom - top;
+}
+
+Vec2 myRectangle::GetCenter() const
+{
+	return Vec2(left + 0.5f * (GetWidth()), top + 0.5f * (GetBottom()));
 }
 
 float myRectangle::GetLeft() const
 {
-	return center.x - width * 0.5f;
+	return left;
 }
 
 float myRectangle::GetRight() const
 {
-	return center.x + width * 0.5f;
+	return right;
 }
 
 float myRectangle::GetTop() const
 {
-	return center.y - height * 0.5f;
+	return top;
 }
 
 float myRectangle::GetBottom() const
 {
-	return center.y + height * 0.5f;
+	return bottom;
+}
+
+void myRectangle::MoveHorizontal(float x)
+{
+	left += x;
+	right += x;
+}
+
+void myRectangle::MoveVertical(float y)
+{
+	top += y;
+	bottom += y;
 }
 
 
