@@ -10,7 +10,7 @@ class pad
 {
 public:
 	pad() = default;
-	pad(Vec2 pos_in, float width_in, float height_in, Vec2 vel_in, Color c_in);
+	pad(Vec2& pos_in, float width_in, float height_in, Vec2 vel_in, Color c_in);
 	void update(const Keyboard& kbd, float dt);
 	void draw(Graphics& gfx);
 	void doWallCollision(const myRectangle& wallRec);

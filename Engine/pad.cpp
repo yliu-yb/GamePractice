@@ -1,6 +1,6 @@
 #include "pad.h"
 
-pad::pad(Vec2 pos_in, float width_in, float height_in, Vec2 vel_in, Color c_in)
+pad::pad(Vec2& pos_in, float width_in, float height_in, Vec2 vel_in, Color c_in)
 	:
 	pos(pos_in),
 	width(width_in),
@@ -38,23 +38,23 @@ void pad::draw(Graphics & gfx)
 
 void pad::doWallCollision(const myRectangle & wallRec)
 {
-	myRectangle rec = GetRect();
+	myRectangle rec = AddWings();
 	if (rec.GetLeft() <= wallRec.GetLeft())
 	{
-		rec.MoveHorizontal(wallRec.GetLeft() - rec.GetLeft());
+		pos.x = wallRec.GetLeft() + rec.GetWidth() * 0.5f;
 	}
 	else if (rec.GetRight() >= wallRec.GetRight())
 	{
-		rec.MoveHorizontal(wallRec.GetRight() - rec.GetRight());
+		pos.x = wallRec.GetRight() - rec.GetWidth() * 0.5f;
 	}
 
 	if (rec.GetTop() <= wallRec.GetTop())
 	{
-		rec.MoveVertical(wallRec.GetTop() - rec.GetTop());
+		pos.y = wallRec.GetTop() + rec.GetHeight() * 0.5f;
 	}
 	else if (rec.GetBottom() >= wallRec.GetBottom())
 	{
-		rec.MoveVertical(wallRec.GetBottom() - rec.GetBottom());
+		pos.y = wallRec.GetBottom() - rec.GetHeight() * 0.5f;
 	}
 }
 

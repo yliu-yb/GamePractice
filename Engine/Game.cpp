@@ -27,7 +27,7 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	ball(Vec2(10, 10), Vec2(2000, 400)),
 	paddle(Vec2(500, 300), 60, 20, Vec2(300, 300), RGB(0, 255, 0)),
-	bricks(Vec2(500, 300), 50, 30, RGB(255,0,0)),
+	bricks(Vec2(100, 100), 50, 30, RGB(255,0,0)),
 	wall(0, Graphics::ScreenWidth, 0, Graphics::ScreenHeight),
 	arkbrick(L".\\Sounds\\arkbrick.wav", false),
 	arkpad(L".\\Sounds\\arkpad.wav", false)
@@ -48,26 +48,25 @@ void Game::UpdateModel()
 	auto dt = ft.Mark();
 
 	ball.update(dt);
-
 	ball.wallCollision(wall);
 
-	if (ball.boardCollision(board.rec))
-	{
-		arkbrick.Play();
-	}
+	paddle.update(wnd.kbd, dt);
+	paddle.doWallCollision(wall);
 
-	if (ball.boardCollision(moveBoard.rec))
+	if (paddle.doBallCollision(ball))
 	{
 		arkpad.Play();
 	}
-	
-	moveBoard.update(wnd.kbd, dt);
-	moveBoard.wallCollision(wall);
+
+	if (bricks.doBallCollision(ball))
+	{
+		arkbrick.Play();
+	}
 }
 
 void Game::ComposeFrame()
 {
-	moveBoard.draw(gfx);
-	board.draw(gfx);
+	bricks.draw(gfx);
+	paddle.draw(gfx);
 	ball.Draw(gfx);
 }

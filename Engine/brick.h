@@ -7,6 +7,7 @@
 
 class brick
 {
+public:
 	brick() = default;
 	brick(Vec2 &pos_in, float width_in, float height_in, Color c_in);
 	void draw(Graphics &gfx);
