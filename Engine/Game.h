@@ -51,8 +51,15 @@ private:
 	Ball ball;
 	FrameTimer ft;
 	pad paddle;
-	brick bricks;
 	myRectangle wall;
 	Sound arkbrick;
 	Sound arkpad;
+
+	static constexpr int bks_row = 5;
+	static constexpr int bks_column = 10;
+	static constexpr int bk_width = 50;
+	static constexpr int bk_height = 30;
+
+	brick bricks[bks_row * bks_column];
+
 };

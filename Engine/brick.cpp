@@ -59,5 +59,5 @@ bool brick::doBallCollision(Ball & ball)
 
 myRectangle brick::GetRect()
 {
-	return myRectangle::FromCenter(pos, width * 0.5f, height * 0.5f);
+	return myRectangle::FromCenter(pos, width * 0.5f - padding, height * 0.5f - padding);
 }

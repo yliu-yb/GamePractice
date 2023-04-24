@@ -20,5 +20,6 @@ public:
 	float width;
 	float height;
 	bool destroyed = false;
+	static constexpr int padding = 5;
 };
 

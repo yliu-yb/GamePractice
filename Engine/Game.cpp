@@ -25,14 +25,22 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	ball(Vec2(10, 10), Vec2(2000, 400)),
-	paddle(Vec2(500, 300), 60, 20, Vec2(300, 300), RGB(0, 255, 0)),
-	bricks(Vec2(100, 100), 50, 30, RGB(255,0,0)),
+	ball(Vec2(10, 10), Vec2(300, 300)),
+	paddle(Vec2(500, 300), 100, 20, Vec2(1000, 300), RGB(0, 255, 0)),
 	wall(0, Graphics::ScreenWidth, 0, Graphics::ScreenHeight),
 	arkbrick(L".\\Sounds\\arkbrick.wav", false),
 	arkpad(L".\\Sounds\\arkpad.wav", false)
 {
+	Vec2 topleft(50,50);
+	Color bks_c[5] = { RGB(255, 0, 0), RGB(0, 255, 0), RGB(0, 0, 255),  RGB(255, 255, 0),  RGB(0, 255, 255) };
 
+	for (int i = 0; i < bks_row; ++i) 
+	{
+		for (int j = 0; j < bks_column; ++j)
+		{
+			bricks[i * bks_column + j] = brick(topleft + Vec2(bk_width * j, bk_height * i), bk_width, bk_height, bks_c[i]);
+		}
+	}
 }
 
 void Game::Go()
@@ -58,15 +66,22 @@ void Game::UpdateModel()
 		arkpad.Play();
 	}
 
-	if (bricks.doBallCollision(ball))
+	for (brick& b : bricks) 
 	{
-		arkbrick.Play();
+		if (b.doBallCollision(ball))
+		{
+			arkbrick.Play();
+			break;
+		}
 	}
 }
 
 void Game::ComposeFrame()
 {
-	bricks.draw(gfx);
+	for (brick& b : bricks)
+	{
+		b.draw(gfx);
+	}
 	paddle.draw(gfx);
 	ball.Draw(gfx);
 }
